@@ -19,10 +19,10 @@ export const SurveyCTA = () => {
         >
           <h2 className="font-outfit font-extrabold text-4xl md:text-6xl text-white mb-6">
             Help us build Autobee.<br />
-            <span className="text-brand-amber">Win 3 FREE washes.</span>
+            <span className="text-brand-amber">Win 3 FREE Premium Washes.</span>
           </h2>
           <p className="text-white/60 text-lg md:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
-            We're launching soon in Trivandrum. Complete a quick 2-minute survey to shape our features, and selected participants will win 3 free premium car washes.
+            We're launching soon in Trivandrum. Complete a quick 2-minute survey to shape our features, and selected participants will win 3 free premium washes (car or bike).
           </p>
           <Link
             href="/survey"

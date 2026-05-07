@@ -20,11 +20,11 @@ export const Hero = () => {
         >
           <div className="inline-flex items-center gap-2 bg-brand-amber/10 border border-brand-amber/20 rounded-full px-4 py-2 mb-6">
             <Gift className="w-4 h-4 text-brand-amber" />
-            <span className="text-brand-amber text-xs md:text-sm font-bold tracking-widest uppercase">Win 3 FREE Washes</span>
+            <span className="text-brand-amber text-xs md:text-sm font-bold tracking-widest uppercase">Win 3 FREE Premium Washes</span>
           </div>
           <h1 className="font-outfit font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tight">
-            Stop Wasting Weekends<br />
-            <span className="text-brand-amber">At The Car Wash.</span>
+            Smart Vehicle Care.<br />
+            <span className="text-brand-amber">At Your Fingertips.</span>
           </h1>
         </motion.div>
 
@@ -88,8 +88,6 @@ export const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Stats bar */}
- 
     </section>
   );
 };

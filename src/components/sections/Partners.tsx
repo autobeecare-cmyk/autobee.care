@@ -24,7 +24,7 @@ export const Partners = () => {
               <span className="text-brand-amber text-xs font-bold tracking-widest uppercase">For Centers</span>
             </div>
             <h2 className="font-outfit font-bold text-4xl md:text-5xl text-white mb-4">
-              Grow your wash center revenue.
+              Grow your business revenue.
             </h2>
             <p className="text-white/50 text-lg mb-10 max-w-sm leading-relaxed">
               Zero marketing spend. Join the Autobee partner network and get a steady stream of pre-paid customers sent directly to you.
@@ -52,7 +52,7 @@ export const Partners = () => {
           {/* Right — benefits */}
           <div className="flex-1 p-10 md:p-16 bg-gradient-to-br from-[#F5B700] via-[#F5B700] to-[#e5a800] flex flex-col justify-center">
             <h3 className="font-outfit font-bold text-2xl md:text-3xl text-black mb-8">
-              Why wash centers choose Autobee
+              Why service partners choose Autobee
             </h3>
             <ul className="space-y-5">
               {benefits.map(({ icon: Icon, text }, i) => (

@@ -10,7 +10,7 @@ const features = [
   {
     icon: CalendarCheck,
     title: "Book Exact Time Slots",
-    description: "Like Uber for your car wash. Book a slot and skip the line completely."
+    description: "Like Uber for your vehicle care. Book a slot and skip the line completely."
   },
   {
     icon: IndianRupee,

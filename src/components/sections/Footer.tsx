@@ -11,7 +11,7 @@ export const Footer = () => {
           <div className="flex flex-col gap-6">
             <Logo />
             <p className="text-white/40 text-sm max-w-xs leading-relaxed">
-              Smart car care. We come to you. Launching soon in Trivandrum, Kerala.
+              Smart vehicle care. At your fingertips. Launching soon in Trivandrum, Kerala.
             </p>
           </div>
 

@@ -125,7 +125,7 @@ export default function JoinWaitlistPage() {
               <span className="text-brand-amber text-xs font-bold tracking-widest uppercase">Early Access Open</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] tracking-tight">
-              Wash your car<br />
+              Care for your vehicle<br />
               <span className="text-brand-amber underline decoration-brand-amber/30 underline-offset-8">without the wait.</span>
             </h1>
             <p className="text-white/50 text-xl md:text-2xl font-light leading-relaxed max-w-xl">
@@ -163,7 +163,7 @@ export default function JoinWaitlistPage() {
                 ))}
               </div>
               <p className="text-sm text-white/40 font-medium">
-                <span className="text-white font-bold">500+ car owners</span> have already secured their spot.
+                <span className="text-white font-bold">500+ vehicle owners</span> have already secured their spot.
               </p>
             </div>
           </div>

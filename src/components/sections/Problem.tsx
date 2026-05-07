@@ -34,7 +34,7 @@ export const Problem = () => {
           className="text-center mb-20"
         >
           <h2 className="font-outfit font-bold text-4xl md:text-6xl text-white">
-            Car care shouldn't be this <span className="text-white/30 italic">difficult.</span>
+            Vehicle care shouldn't be this <span className="text-white/30 italic">difficult.</span>
           </h2>
         </motion.div>
 

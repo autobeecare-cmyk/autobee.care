@@ -31,7 +31,7 @@ export const Waitlist = () => {
             </h2>
             
             <p className="text-black/70 text-xl md:text-2xl font-medium mb-12 max-w-2xl mx-auto">
-              Join 500+ car owners in Trivandrum waiting for the smarter way to wash.
+              Join 500+ vehicle owners in Trivandrum waiting for the smarter way to wash.
             </p>
 
             <Link
