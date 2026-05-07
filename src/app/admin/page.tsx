@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 
-  Search, Filter, Download, Loader2, Lock 
+  Search, Filter, Download, Loader2, Lock, Menu 
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
@@ -30,6 +30,7 @@ export default function AdminDashboard() {
   const [data, setData] = useState<any>(null);
   const [activeView, setActiveView] = useState<View>("overview");
   const [searchTerm, setSearchTerm] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const supabase = createClient();
 
@@ -97,7 +98,7 @@ export default function AdminDashboard() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center p-6">
+      <div className="min-h-screen bg-black flex flex-col items-center justify-center p-6 text-white font-instrument">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -157,23 +158,37 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-instrument flex">
+    <div className="min-h-screen bg-[#050505] text-white font-instrument flex flex-col lg:flex-row">
+      {/* Mobile Top Bar */}
+      <div className="lg:hidden flex items-center justify-between p-6 bg-black border-b border-white/5 sticky top-0 z-[60]">
+        <Logo />
+        <button 
+            onClick={() => setIsSidebarOpen(true)}
+            className="p-3 bg-white/5 rounded-xl border border-white/10"
+        >
+          <Menu className="w-6 h-6 text-brand-amber" />
+        </button>
+      </div>
+
       <Sidebar 
         activeView={activeView} 
         setActiveView={setActiveView} 
         onLogout={handleLogout} 
         user={user}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
 
-      <main className="flex-1 p-8 md:p-12 overflow-y-auto h-screen">
+      {/* Main Content Area */}
+      <main className="flex-1 p-6 md:p-12 overflow-y-auto h-screen">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
           <div>
             <h1 className="text-4xl font-outfit font-bold capitalize">{activeView}</h1>
             <p className="text-white/40 mt-1">Manage and track Autobee growth metrics</p>
           </div>
           
-          <div className="flex items-center gap-4 w-full md:w-auto">
-            <div className="relative flex-1 md:w-64">
+          <div className="flex items-center gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+            <div className="relative flex-1 md:w-64 min-w-[200px]">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
               <Input 
                 placeholder="Search..." 
@@ -182,15 +197,18 @@ export default function AdminDashboard() {
                 className="bg-white/5 border-white/10 pl-11 h-12 rounded-xl text-sm focus:ring-1 focus:ring-brand-amber/50" 
               />
             </div>
-            <Button variant="outline" className="h-12 border-white/10 hover:bg-white/5 rounded-xl px-4 text-white/60">
-              <Filter className="w-4 h-4 mr-2" /> Filter
-            </Button>
-            <Button className="h-12 bg-brand-amber hover:bg-brand-amber/90 text-black font-bold rounded-xl px-4">
-              <Download className="w-4 h-4 mr-2" /> Export
-            </Button>
+            <div className="flex items-center gap-2">
+                <Button variant="outline" className="h-12 border-white/10 hover:bg-white/5 rounded-xl px-4 text-white/60">
+                <Filter className="w-4 h-4 mr-2" /> Filter
+                </Button>
+                <Button className="h-12 bg-brand-amber hover:bg-brand-amber/90 text-black font-bold rounded-xl px-4">
+                <Download className="w-4 h-4 mr-2" /> Export
+                </Button>
+            </div>
           </div>
         </header>
 
+        {/* Content Switching Logic */}
         <AnimatePresence mode="wait">
           {activeView === "overview" && <Overview data={data} />}
           {activeView === "waitlist" && <WaitlistTable data={data?.waitlist} search={searchTerm} />}
