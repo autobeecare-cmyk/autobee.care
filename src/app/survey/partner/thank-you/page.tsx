@@ -54,7 +54,7 @@ export default function PartnerThankYouPage() {
             <span className="text-brand-amber flex items-center justify-center gap-2">hive! <Sparkles className="w-8 h-8" /></span>
           </h1>
           <p className="text-white/50 text-lg leading-relaxed max-w-sm mx-auto">
-            Thanks for your interest in partnering with Autobee. Our team will reach out on WhatsApp within 48 hours to walk you through the next steps.
+            Thanks for your interest in partnering with Autobee. Our team will reach out on WhatsApp to walk you through the next steps. Follow us on Instagram for updates!
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export default function PartnerThankYouPage() {
           <p className="text-white/40 text-xs uppercase tracking-widest font-bold">What happens next</p>
           {[
             "Our team reviews your application",
-            "You'll get a WhatsApp call within 48h",
+            "You'll get a WhatsApp call from us",
             "We walk you through onboarding",
             "You start getting customers",
           ].map((item, i) => (

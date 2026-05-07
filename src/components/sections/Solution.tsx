@@ -49,7 +49,7 @@ export const Solution = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -58,7 +58,7 @@ export const Solution = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="group p-8 h-full bg-[#080808]/50 border-white/5 hover:border-brand-amber/30 hover:bg-brand-amber/[0.02] transition-all duration-500 rounded-3xl relative overflow-hidden">
+              <Card className="group p-6 h-full bg-[#080808]/50 border-white/5 hover:border-brand-amber/30 hover:bg-brand-amber/[0.02] transition-all duration-500 rounded-3xl relative overflow-hidden">
                 {/* Accent glow on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-brand-amber/0 via-brand-amber/0 to-brand-amber/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 

@@ -59,7 +59,7 @@ export default function ThankYouPage() {
             <span className="text-brand-amber">Thank you!</span>
           </h1>
           <p className="text-white/60 text-lg leading-relaxed">
-            Your feedback is invaluable. We'll announce the wash voucher winners on the 15th via WhatsApp.
+            Your feedback is invaluable. We'll announce the wash voucher winners soon. Follow us on Instagram for updates!
           </p>
         </div>
 
