@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, Store } from "lucide-react";
+import { ChevronLeft, ChevronRight, Store, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STEPS = 4;
@@ -335,9 +335,11 @@ export default function PartnerSurveyPage() {
                   <div className="space-y-5">
                     {/* Partnership card */}
                     <div className="bg-brand-amber/10 border border-brand-amber/20 rounded-2xl p-5 mb-2">
-                      <p className="font-bold text-brand-amber mb-2">🐝 AutoBee Partnership</p>
+                      <p className="font-bold text-brand-amber mb-2 flex items-center gap-2">
+                        <Sparkles className="w-4 h-4" /> Autobee Partnership
+                      </p>
                       <p className="text-sm text-white/60 leading-relaxed">
-                        AutoBee connects pre-verified customers to your center, handles scheduling, and guarantees timely payments — you just focus on washing. We take a small commission per booking.
+                        Autobee connects pre-verified customers to your center, handles scheduling, and guarantees timely payments — you just focus on washing. We take a small commission per booking.
                       </p>
                     </div>
 
@@ -373,7 +375,7 @@ export default function PartnerSurveyPage() {
                       <Input {...register("raw_materials_source")} placeholder="e.g. local supplier, wholesale market" className="bg-[#0A0A0A] border-white/10 h-14 text-white" />
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-3 block">Overall — would you like to partner with AutoBee?</Label>
+                      <Label className="text-white/70 mb-3 block">Overall — would you like to partner with Autobee?</Label>
                       <div className="grid grid-cols-1 gap-3">
                         {[
                           "Yes — sign me up!",
@@ -428,7 +430,11 @@ export default function PartnerSurveyPage() {
                     step > 1 ? "flex-[2]" : "flex-1"
                   )}
                 >
-                  {isSubmitting ? "Submitting..." : "Submit & Partner with Us 🐝"}
+                  {isSubmitting ? "Submitting..." : (
+                    <span className="flex items-center gap-2">
+                      Submit & Partner with Us <Sparkles className="w-5 h-5" />
+                    </span>
+                  )}
                 </Button>
               )}
             </div>

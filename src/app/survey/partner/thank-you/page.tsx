@@ -9,6 +9,7 @@ import Link from "next/link";
 import { CheckCircle2, Share2, Home, Store } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Sparkles } from "lucide-react";
 
 export default function PartnerThankYouPage() {
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function PartnerThankYouPage() {
   const share = () => {
     navigator.clipboard.writeText("https://autobee.care/survey/partner");
     toast.success("Link copied!", {
-      description: "Share it with other wash center owners! 🐝",
+      description: "Share it with other wash center owners!",
     });
   };
 
@@ -50,10 +51,10 @@ export default function PartnerThankYouPage() {
           </div>
           <h1 className="text-4xl md:text-5xl font-outfit font-extrabold text-white">
             You're in the<br />
-            <span className="text-brand-amber">hive! 🐝</span>
+            <span className="text-brand-amber flex items-center justify-center gap-2">hive! <Sparkles className="w-8 h-8" /></span>
           </h1>
           <p className="text-white/50 text-lg leading-relaxed max-w-sm mx-auto">
-            Thanks for your interest in partnering with AutoBee. Our team will reach out on WhatsApp within 48 hours to walk you through the next steps.
+            Thanks for your interest in partnering with Autobee. Our team will reach out on WhatsApp within 48 hours to walk you through the next steps.
           </p>
         </div>
 
@@ -63,7 +64,7 @@ export default function PartnerThankYouPage() {
             "Our team reviews your application",
             "You'll get a WhatsApp call within 48h",
             "We walk you through onboarding",
-            "You start getting customers 🚗",
+            "You start getting customers",
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3">
               <span className="text-brand-amber font-outfit font-bold text-sm mt-0.5">{String(i + 1).padStart(2, "0")}</span>
@@ -80,7 +81,7 @@ export default function PartnerThankYouPage() {
               "bg-brand-amber hover:bg-brand-amber/90 text-black font-bold rounded-xl h-14 text-base"
             )}
           >
-            <Home className="mr-2 w-4 h-4" /> Back to AutoBee
+            <Home className="mr-2 w-4 h-4" /> Back to Autobee
           </Link>
           <button
             onClick={share}

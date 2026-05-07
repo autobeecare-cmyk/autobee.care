@@ -36,7 +36,7 @@ export default function ThankYouPage() {
   const share = () => {
     navigator.clipboard.writeText("https://autobee.care/survey");
     toast.success("Link copied!", {
-      description: "Share it with your friends and help us grow! 🐝",
+      description: "Share it with your friends and help us grow!",
     });
   };
 
@@ -71,7 +71,7 @@ export default function ThankYouPage() {
               "bg-brand-amber hover:bg-brand-amber/90 text-black font-bold rounded-xl h-14 text-lg"
             )}
           >
-            <Home className="mr-2 w-5 h-5" /> Visit AutoBee Home
+            <Home className="mr-2 w-5 h-5" /> Visit Autobee Home
           </Link>
           <Button variant="outline" size="lg" onClick={share} className="border-white/10 hover:bg-white/5 text-white font-semibold rounded-xl h-14 text-lg">
             <Share2 className="mr-2 w-5 h-5" /> Share with Friends

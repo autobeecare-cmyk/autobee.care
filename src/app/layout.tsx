@@ -16,7 +16,7 @@ const instrument = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "AutoBee | Smart car care. We come to you.",
+  title: "Autobee | Smart car care. We come to you.",
   description: "Book washes, manage vehicles, all in one app. Launching in Trivandrum, Kerala.",
 };
 
@@ -30,7 +30,7 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} ${instrument.variable} dark antialiased scroll-smooth`}
     >
-      <body className="font-instrument bg-black text-white min-h-screen">
+      <body className="font-instrument bg-black text-white min-h-screen overflow-x-hidden">
         {children}
         <Toaster position="top-center" richColors theme="dark" />
       </body>

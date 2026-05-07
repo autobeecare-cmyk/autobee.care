@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Gift } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const SurveyCTA = () => {
@@ -18,7 +18,7 @@ export const SurveyCTA = () => {
           className="max-w-3xl mx-auto bg-brand-amber/10 border border-brand-amber/20 rounded-[2.5rem] p-8 md:p-16"
         >
           <h2 className="font-outfit font-extrabold text-4xl md:text-6xl text-white mb-6">
-            Help us build AutoBee.<br />
+            Help us build Autobee.<br />
             <span className="text-brand-amber">Win 3 FREE washes.</span>
           </h2>
           <p className="text-white/60 text-lg md:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
@@ -31,7 +31,8 @@ export const SurveyCTA = () => {
               "bg-brand-amber hover:bg-brand-amber/90 text-black font-extrabold rounded-full px-10 h-16 text-xl shadow-[0_0_40px_rgba(245,183,0,0.3)] hover:shadow-[0_0_60px_rgba(245,183,0,0.4)] transition-all group"
             )}
           >
-            Take the Survey & Win 🎁
+            Take the Survey & Win
+            <Gift className="w-5 h-5 ml-2" />
             <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-2 transition-transform" />
           </Link>
         </motion.div>

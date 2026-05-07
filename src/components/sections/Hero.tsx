@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Gift, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Hero = () => {
@@ -19,7 +19,8 @@ export const Hero = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="inline-flex items-center gap-2 bg-brand-amber/10 border border-brand-amber/20 rounded-full px-4 py-2 mb-6">
-            <span className="text-brand-amber text-xs md:text-sm font-bold tracking-widest uppercase">🎁 Win 3 FREE Washes</span>
+            <Gift className="w-4 h-4 text-brand-amber" />
+            <span className="text-brand-amber text-xs md:text-sm font-bold tracking-widest uppercase">Win 3 FREE Washes</span>
           </div>
           <h1 className="font-outfit font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tight">
             Stop Wasting Weekends<br />
@@ -53,7 +54,7 @@ export const Hero = () => {
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link 
-            href="#waitlist" 
+            href="/join" 
             className={cn(
               buttonVariants({ variant: "outline", size: "lg" }),
               "border-white/20 hover:bg-white/5 text-white font-semibold rounded-xl px-8 h-14 text-lg"
@@ -69,7 +70,7 @@ export const Hero = () => {
           transition={{ duration: 1, delay: 0.8 }}
           className="mt-6 text-sm text-white/40 flex items-center gap-2"
         >
-          🐝 Take our 2-min survey to enter the giveaway
+          <Sparkles className="w-4 h-4 text-brand-amber" /> Take our 2-min survey to enter the giveaway
         </motion.p>
 
         {/* Animated wheel or icon */}

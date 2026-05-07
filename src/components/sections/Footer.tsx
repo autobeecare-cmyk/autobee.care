@@ -1,6 +1,6 @@
 import { Logo } from "@/components/Logo";
 import Link from "next/link";
-import { Camera, Mail, MessageSquare } from "lucide-react";
+import { Camera, Mail, MessageSquare, Sparkles } from "lucide-react";
 
 export const Footer = () => {
   return (
@@ -20,7 +20,7 @@ export const Footer = () => {
             <div className="flex flex-col gap-4">
               <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-2">Platform</h4>
               <Link href="/survey" className="text-white/40 hover:text-brand-amber transition-colors text-sm">Survey</Link>
-              <Link href="#waitlist" className="text-white/40 hover:text-brand-amber transition-colors text-sm">Join Waitlist</Link>
+              <Link href="/join" className="text-white/40 hover:text-brand-amber transition-colors text-sm">Join Waitlist</Link>
               <Link href="/survey/partner" className="text-white/40 hover:text-brand-amber transition-colors text-sm">Become a Partner</Link>
             </div>
             <div className="flex flex-col gap-4">
@@ -49,8 +49,8 @@ export const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/20">
-          <p>© 2026 AutoBee. All rights reserved.</p>
-          <p>Built with care in Kerala 🐝</p>
+          <p>© 2026 Autobee. All rights reserved.</p>
+          <p className="flex items-center gap-1">Built with care in Kerala <Sparkles className="w-3 h-3 text-brand-amber/50" /></p>
         </div>
       </div>
     </footer>

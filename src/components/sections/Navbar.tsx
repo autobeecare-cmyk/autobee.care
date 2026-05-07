@@ -37,7 +37,7 @@ export const Navbar = () => {
             Take the Survey
           </Link>
           <Link 
-            href="#waitlist" 
+            href="/join" 
             className={cn(
               buttonVariants({ variant: "default" }),
               "bg-brand-amber hover:bg-brand-amber/90 text-black font-semibold rounded-full px-6"
@@ -67,7 +67,7 @@ export const Navbar = () => {
             Take the Survey
           </Link>
           <Link 
-            href="#waitlist" 
+            href="/join" 
             onClick={() => setMobileMenuOpen(false)}
             className={cn(
               buttonVariants({ variant: "default" }),

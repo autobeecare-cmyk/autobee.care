@@ -1,164 +1,56 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-const waitlistSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  phone: z.string().regex(/^(?:\+91)?[6-9]\d{9}$/, "Please enter a valid Indian phone number"),
-  email: z.string().email("Invalid email address").optional().or(z.literal("")),
-  area: z.string().min(1, "Please select your area"),
-});
-
-type WaitlistValues = z.infer<typeof waitlistSchema>;
-
-const areas = [
-  "Pattom", "Kowdiar", "Kazhakoottam", "Technopark", "Vellayambalam",
-  "Thampanoor", "Ambalamukku", "Peroorkada", "Statue", "Other"
-];
+import { Sparkles, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export const Waitlist = () => {
-  const [loading, setLoading] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    reset,
-    formState: { errors },
-  } = useForm<WaitlistValues>({
-    resolver: zodResolver(waitlistSchema),
-    defaultValues: { name: "", phone: "", email: "", area: "" },
-  });
-
-  const selectedArea = watch("area");
-
-  const onSubmit = async (data: WaitlistValues) => {
-    setLoading(true);
-    try {
-      const response = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) throw new Error("Submission failed");
-
-      toast.success("You're on the list! 🐝", {
-        description: "We'll text you when we launch. Welcome to the hive!",
-      });
-      reset();
-    } catch {
-      toast.error("Something went wrong", {
-        description: "Please try again later.",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <section id="waitlist" className="py-24 bg-black">
-        <div className="w-full bg-[#F5B700] p-8 md:p-16 relative overflow-hidden">
-          {/* Decorative glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl pointer-events-none" />
+      <div className="w-full bg-[#F5B700] p-12 md:p-24 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/20 rounded-full translate-x-1/3 -translate-y-1/3 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/5 rounded-full -translate-x-1/2 translate-y-1/2 blur-3xl pointer-events-none" />
 
-          <div className="max-w-4xl mx-auto">
-
-          <div className="relative z-10 text-center mb-10">
-            <h2 className="font-outfit font-extrabold text-4xl md:text-6xl text-black mb-4">
-              Be the first to experience AutoBee.
+        <div className="max-w-4xl mx-auto relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center gap-2 bg-black/10 rounded-full px-4 py-2 mb-8">
+              <Sparkles className="w-4 h-4 text-black" />
+              <span className="text-black text-xs font-bold tracking-widest uppercase">Limited Slots</span>
+            </div>
+            
+            <h2 className="font-outfit font-extrabold text-4xl md:text-7xl text-black mb-8 leading-tight">
+              Ready to reclaim <br className="hidden md:block" /> your weekends?
             </h2>
-            <p className="text-black/70 text-lg md:text-xl font-medium">
-              Join the waitlist for early access and a free wash on launch week.
+            
+            <p className="text-black/70 text-xl md:text-2xl font-medium mb-12 max-w-2xl mx-auto">
+              Join 500+ car owners in Trivandrum waiting for the smarter way to wash.
             </p>
-          </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="relative z-10 space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Name */}
-              <div>
-                <Input
-                  {...register("name")}
-                  placeholder="Your Name"
-                  className="bg-white/90 border-none h-14 rounded-xl text-black placeholder:text-black/50 text-base px-5 focus:bg-white transition-all"
-                />
-                {errors.name && (
-                  <p className="mt-1 text-sm font-semibold text-red-800">{errors.name.message}</p>
-                )}
-              </div>
-
-              {/* Phone */}
-              <div>
-                <Input
-                  {...register("phone")}
-                  placeholder="Phone (+91 98765 43210)"
-                  type="tel"
-                  inputMode="numeric"
-                  className="bg-white/90 border-none h-14 rounded-xl text-black placeholder:text-black/50 text-base px-5 focus:bg-white transition-all"
-                />
-                {errors.phone && (
-                  <p className="mt-1 text-sm font-semibold text-red-800">{errors.phone.message}</p>
-                )}
-              </div>
-            </div>
-
-            {/* Email */}
-            <Input
-              {...register("email")}
-              placeholder="Email (Optional)"
-              type="email"
-              inputMode="email"
-              className="bg-white/90 border-none h-14 rounded-xl text-black placeholder:text-black/50 text-base px-5 focus:bg-white transition-all"
-            />
-
-            {/* Area selector — button pills */}
-            <div>
-              <p className="text-sm font-semibold text-black/60 mb-2 ml-1">Your Area</p>
-              <div className="flex flex-wrap gap-2">
-                {areas.map((area) => (
-                  <button
-                    key={area}
-                    type="button"
-                    onClick={() => setValue("area", area, { shouldValidate: true })}
-                    className={cn(
-                      "px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all",
-                      selectedArea === area
-                        ? "bg-black text-white border-black shadow-md scale-105"
-                        : "bg-white/60 text-black border-white/80 hover:bg-white"
-                    )}
-                  >
-                    {area}
-                  </button>
-                ))}
-              </div>
-              {errors.area && (
-                <p className="mt-2 text-sm font-semibold text-red-800">{errors.area.message}</p>
+            <Link
+              href="/join"
+              className={cn(
+                buttonVariants({ size: "lg" }),
+                "bg-black hover:bg-black/90 text-white font-extrabold rounded-2xl px-12 h-20 text-2xl shadow-2xl transition-all hover:scale-105 active:scale-95 group"
               )}
-            </div>
-
-            {/* Submit */}
-            <div className="pt-2">
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full h-16 bg-black hover:bg-black/80 text-white font-extrabold text-xl rounded-xl shadow-2xl transition-all active:scale-[0.98]"
-              >
-                {loading ? "Joining..." : "Join the Hive 🐝"}
-              </Button>
-            </div>
-          </form>
-          </div>
+            >
+              Join the Waitlist
+              <ChevronRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            
+            <p className="mt-8 text-black/40 text-sm font-bold uppercase tracking-widest">
+              Free wash for the first 100 members
+            </p>
+          </motion.div>
         </div>
-
+      </div>
     </section>
   );
 };

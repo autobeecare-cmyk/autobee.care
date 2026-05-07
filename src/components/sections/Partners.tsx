@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import { CheckCircle2, Users, TrendingUp, Smartphone, Clock } from "lucide-react";
+import { CheckCircle2, Users, TrendingUp, Smartphone, Clock, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const benefits = [
@@ -27,7 +27,7 @@ export const Partners = () => {
               Grow your wash center revenue.
             </h2>
             <p className="text-white/50 text-lg mb-10 max-w-sm leading-relaxed">
-              Zero marketing spend. Join the AutoBee partner network and get a steady stream of pre-paid customers sent directly to you.
+              Zero marketing spend. Join the Autobee partner network and get a steady stream of pre-paid customers sent directly to you.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
@@ -37,7 +37,8 @@ export const Partners = () => {
                   "bg-brand-amber hover:bg-brand-amber/90 text-black font-bold rounded-full w-fit px-8 h-14 text-lg"
                 )}
               >
-                Become a Partner 🐝
+                Become a Partner
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
               <Link
                 href="/survey/partner"
@@ -51,7 +52,7 @@ export const Partners = () => {
           {/* Right — benefits */}
           <div className="flex-1 p-10 md:p-16 bg-gradient-to-br from-[#F5B700] via-[#F5B700] to-[#e5a800] flex flex-col justify-center">
             <h3 className="font-outfit font-bold text-2xl md:text-3xl text-black mb-8">
-              Why wash centers choose AutoBee
+              Why wash centers choose Autobee
             </h3>
             <ul className="space-y-5">
               {benefits.map(({ icon: Icon, text }, i) => (

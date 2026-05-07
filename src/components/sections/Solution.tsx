@@ -44,7 +44,7 @@ export const Solution = () => {
           className="mb-24 text-center"
         >
           <h2 className="font-outfit font-bold text-4xl md:text-7xl text-white tracking-tight">
-            AutoBee makes it <br />
+            Autobee makes it <br />
             <span className="text-brand-amber">effortless.</span>
           </h2>
         </motion.div>

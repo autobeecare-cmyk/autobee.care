@@ -13,18 +13,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight, Check, Smartphone, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const STEPS = 6;
+const STEPS = 3;
 
 const STEP_TITLES = [
-  "About You",
-  "Your Vehicle",
+  "The Basics",
   "Your Wash Habits",
-  "AutoBee Concept",
-  "Beyond Wash",
-  "Final Thoughts",
+  "Autobee Feedback",
 ];
 
 const AREAS = ["Pattom", "Kowdiar", "Kazhakoottam", "Technopark", "Vellayambalam", "Thampanoor", "Other"];
@@ -84,12 +81,9 @@ export default function SurveyPage() {
 
   const getFieldsForStep = (s: number): (keyof OwnerSurveyValues)[] => {
     switch (s) {
-      case 1: return ["name", "phone", "age_group", "area"];
-      case 2: return ["vehicle_type", "vehicle_make_model", "vehicle_age"];
-      case 3: return ["wash_frequency", "current_wash_location", "current_spend", "biggest_pain_point"];
-      case 4: return ["used_wash_app_before", "would_book_via_app", "pay_for_subscription", "willingness_to_pay", "on_time_guarantee_value", "fixed_pricing_preference"];
-      case 5: return ["want_vehicle_management", "insurance_reminder_useful", "service_history_useful", "prepurchase_inspection"];
-      case 6: return ["refer_to_friends", "early_access_interest"];
+      case 1: return ["name", "phone", "area", "vehicle_type"];
+      case 2: return ["wash_frequency", "current_spend", "biggest_pain_point"];
+      case 3: return ["would_book_via_app", "pay_for_subscription"];
       default: return [];
     }
   };
@@ -192,34 +186,30 @@ export default function SurveyPage() {
                 {step === 1 && (
                   <div className="space-y-6">
                     <div>
-                      <Label className="text-white/70 mb-2 block">Full Name</Label>
-                      <Input {...register("name")} placeholder="Your full name" className="bg-[#0A0A0A] border-white/10 h-14 text-white" />
+                      <Label className="text-white/70 mb-2 block font-medium">What's your name?</Label>
+                      <Input {...register("name")} placeholder="Full name" className="bg-[#0A0A0A] border-white/10 h-14 text-white rounded-xl focus:border-brand-amber/50 transition-all" />
                       {fieldError("name")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-2 block">Phone Number</Label>
-                      <Input {...register("phone")} placeholder="+91 98765 43210" type="tel" inputMode="numeric" className="bg-[#0A0A0A] border-white/10 h-14 text-white" />
+                      <Label className="text-white/70 mb-2 block font-medium">Phone Number (to win 3 free washes)</Label>
+                      <Input {...register("phone")} placeholder="+91 98765 43210" type="tel" inputMode="numeric" className="bg-[#0A0A0A] border-white/10 h-14 text-white rounded-xl" />
                       {fieldError("phone")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-2 block">Email (Optional)</Label>
-                      <Input {...register("email")} placeholder="your@email.com" type="email" className="bg-[#0A0A0A] border-white/10 h-14 text-white" />
+                      <Label className="text-white/70 mb-2 block font-medium">Email (Optional)</Label>
+                      <Input {...register("email")} placeholder="your@email.com" type="email" className="bg-[#0A0A0A] border-white/10 h-14 text-white rounded-xl" />
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-3 block">Age Group</Label>
-                      <div className="grid grid-cols-3 gap-3">
-                        {["18-25", "26-35", "36-45", "46-55", "55+"].map((age) => radio("age_group", age))}
-                      </div>
-                      {fieldError("age_group")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">Your Area in Trivandrum</Label>
+                      <Label className="text-white/70 mb-3 block font-medium">Your Area in Trivandrum</Label>
                       <AreaPicker value={watch("area") || ""} onChange={(v) => setValue("area", v, { shouldValidate: true })} />
                       {fieldError("area")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-2 block">Occupation (Optional)</Label>
-                      <Input {...register("occupation")} placeholder="e.g. Software Engineer" className="bg-[#0A0A0A] border-white/10 h-14 text-white" />
+                      <Label className="text-white/70 mb-3 block font-medium">What do you drive?</Label>
+                      <div className="grid grid-cols-2 gap-3">
+                        {["Car only", "Bike only", "Both", "Multiple cars"].map((t) => radio("vehicle_type", t))}
+                      </div>
+                      {fieldError("vehicle_type")}
                     </div>
                   </div>
                 )}
@@ -228,61 +218,28 @@ export default function SurveyPage() {
                 {step === 2 && (
                   <div className="space-y-6">
                     <div>
-                      <Label className="text-white/70 mb-3 block">Vehicle Type</Label>
+                      <Label className="text-white/70 mb-3 block font-medium">How often do you wash your vehicle?</Label>
                       <div className="grid grid-cols-2 gap-3">
-                        {["Car only", "Bike only", "Both", "Multiple cars"].map((t) => radio("vehicle_type", t))}
-                      </div>
-                      {fieldError("vehicle_type")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-2 block">Make & Model</Label>
-                      <Input {...register("vehicle_make_model")} placeholder="e.g. Hyundai Creta" className="bg-[#0A0A0A] border-white/10 h-14 text-white" />
-                      {fieldError("vehicle_make_model")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">Vehicle Age</Label>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {["<1 year", "1-3 yrs", "3-5 yrs", "5-10 yrs", "10+ yrs"].map((a) => radio("vehicle_age", a))}
-                      </div>
-                      {fieldError("vehicle_age")}
-                    </div>
-                  </div>
-                )}
-
-                {/* ── STEP 3 ── */}
-                {step === 3 && (
-                  <div className="space-y-6">
-                    <div>
-                      <Label className="text-white/70 mb-3 block">How often do you wash?</Label>
-                      <div className="grid grid-cols-2 gap-3">
-                        {["Daily", "2-3x/week", "Weekly", "Bi-weekly", "Monthly", "Rarely"].map((f) => radio("wash_frequency", f))}
+                        {["Weekly", "Bi-weekly", "Monthly", "Daily", "Rarely"].map((f) => radio("wash_frequency", f))}
                       </div>
                       {fieldError("wash_frequency")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-3 block">Where do you wash currently?</Label>
-                      <div className="grid grid-cols-1 gap-3">
-                        {["At home myself", "Local wash center", "Apartment service", "Petrol pump", "Mix"].map((l) => radio("current_wash_location", l))}
-                      </div>
-                      {fieldError("current_wash_location")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">How much do you spend per wash?</Label>
+                      <Label className="text-white/70 mb-3 block font-medium">Average spend per wash?</Label>
                       <div className="grid grid-cols-2 gap-3">
-                        {["<₹100", "₹100-200", "₹200-400", "₹400-600", "₹600+"].map((s) => radio("current_spend", s))}
+                        {["<₹200", "₹200-400", "₹400-600", "₹600+"].map((s) => radio("current_spend", s))}
                       </div>
                       {fieldError("current_spend")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-3 block">Biggest pain point with current wash?</Label>
+                      <Label className="text-white/70 mb-3 block font-medium">Biggest pain point with car washing today?</Label>
                       <div className="grid grid-cols-1 gap-3">
                         {[
-                          "Long waiting time",
-                          "Inconsistent quality",
-                          "Price uncertainty",
-                          "No fixed slots",
-                          "Distance/travel",
-                          "No major issues",
+                          "Long waiting time at centers",
+                          "Inconsistent wash quality",
+                          "Price changes every time",
+                          "No way to book exact slots",
+                          "Driving/Traffic to the center",
                         ].map((p) => radio("biggest_pain_point", p))}
                       </div>
                       {fieldError("biggest_pain_point")}
@@ -290,124 +247,40 @@ export default function SurveyPage() {
                   </div>
                 )}
 
-                {/* ── STEP 4 ── */}
-                {step === 4 && (
+                {/* ── STEP 3 ── */}
+                {step === 3 && (
                   <div className="space-y-6">
-                    {/* Concept card */}
-                    <div className="bg-brand-amber/10 border border-brand-amber/20 rounded-2xl p-5">
+                    <div className="bg-brand-amber/10 border border-brand-amber/20 rounded-2xl p-5 mb-8">
                       <p className="font-semibold text-brand-amber mb-2 flex items-center gap-2">
-                        <Check className="w-4 h-4" /> The AutoBee Concept
+                        <Check className="w-4 h-4" /> The Autobee Concept
                       </p>
-                      <p className="text-sm text-white/60 leading-relaxed">
-                        📱 An app where you browse wash centers with fixed prices, book an exact time slot (no waiting),
-                        get ₹50 cashback if delayed beyond 10 mins, and subscribe monthly for guaranteed weekly washes.
+                      <p className="text-sm text-white/60 leading-relaxed flex items-start gap-3">
+                        <Smartphone className="w-5 h-5 text-brand-amber shrink-0 mt-0.5" />
+                        <span>One app to browse centers, book exact time slots (no waiting), and get ₹50 cashback if delayed beyond 10 mins.</span>
                       </p>
                     </div>
 
                     <div>
-                      <Label className="text-white/70 mb-3 block">Have you used a wash app before?</Label>
-                      <div className="grid grid-cols-2 gap-3">
-                        {["Yes", "No"].map((o) => radio("used_wash_app_before", o))}
-                      </div>
-                      {fieldError("used_wash_app_before")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">Would you book a car wash via this app?</Label>
+                      <Label className="text-white/70 mb-3 block font-medium">Would you book washes via this app?</Label>
                       <div className="grid grid-cols-1 gap-3">
-                        {["Definitely yes", "Probably yes", "Maybe", "Probably no", "Definitely no"].map((o) => radio("would_book_via_app", o))}
+                        {["Definitely yes", "Probably", "Maybe", "No"].map((o) => radio("would_book_via_app", o))}
                       </div>
                       {fieldError("would_book_via_app")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-3 block">Would you pay for a monthly subscription?</Label>
+                      <Label className="text-white/70 mb-3 block font-medium">Interested in a monthly subscription?</Label>
                       <div className="grid grid-cols-3 gap-3">
                         {["Yes", "Maybe", "No"].map((o) => radio("pay_for_subscription", o))}
                       </div>
                       {fieldError("pay_for_subscription")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-3 block">Monthly subscription budget?</Label>
-                      <div className="grid grid-cols-2 gap-3">
-                        {["<₹300", "₹300-500", "₹500-800", "₹800+", "Wouldn't pay"].map((o) => radio("willingness_to_pay", o))}
-                      </div>
-                      {fieldError("willingness_to_pay")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">How valuable is the on-time guarantee?</Label>
-                      <div className="grid grid-cols-1 gap-3">
-                        {["Very valuable", "Somewhat valuable", "Not important"].map((o) => radio("on_time_guarantee_value", o))}
-                      </div>
-                      {fieldError("on_time_guarantee_value")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">How much do you like fixed pricing?</Label>
-                      <div className="grid grid-cols-2 gap-3">
-                        {["Strongly like", "Like", "Neutral", "Don't care"].map((o) => radio("fixed_pricing_preference", o))}
-                      </div>
-                      {fieldError("fixed_pricing_preference")}
-                    </div>
-                  </div>
-                )}
-
-                {/* ── STEP 5 ── */}
-                {step === 5 && (
-                  <div className="space-y-6">
-                    <p className="text-white/40 text-sm">AutoBee plans to grow into a full vehicle care platform — not just car wash.</p>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">Want a vehicle management feature?</Label>
-                      <div className="grid grid-cols-1 gap-3">
-                        {["Yes — important", "Nice to have", "Don't need"].map((o) => radio("want_vehicle_management", o))}
-                      </div>
-                      {fieldError("want_vehicle_management")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">Are insurance reminders useful?</Label>
-                      <div className="grid grid-cols-3 gap-3">
-                        {["Yes", "Maybe", "No"].map((o) => radio("insurance_reminder_useful", o))}
-                      </div>
-                      {fieldError("insurance_reminder_useful")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">Is service history tracking useful?</Label>
-                      <div className="grid grid-cols-3 gap-3">
-                        {["Yes", "Maybe", "No"].map((o) => radio("service_history_useful", o))}
-                      </div>
-                      {fieldError("service_history_useful")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">Would you use a pre-purchase inspection service?</Label>
-                      <div className="grid grid-cols-1 gap-3">
-                        {["Yes — would pay", "Maybe", "No need"].map((o) => radio("prepurchase_inspection", o))}
-                      </div>
-                      {fieldError("prepurchase_inspection")}
-                    </div>
-                  </div>
-                )}
-
-                {/* ── STEP 6 ── */}
-                {step === 6 && (
-                  <div className="space-y-6">
-                    <div>
-                      <Label className="text-white/70 mb-3 block">Would you refer AutoBee to friends?</Label>
-                      <div className="grid grid-cols-3 gap-3">
-                        {["Definitely", "Maybe", "No"].map((o) => radio("refer_to_friends", o))}
-                      </div>
-                      {fieldError("refer_to_friends")}
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-2 block">Any feedback or features you'd love?</Label>
+                      <Label className="text-white/70 mb-2 block font-medium">Any features you'd love to see? (Optional)</Label>
                       <Textarea
                         {...register("open_feedback")}
-                        placeholder="Tell us anything..."
-                        className="bg-[#0A0A0A] border-white/10 min-h-[120px] rounded-xl text-white"
+                        placeholder="e.g. ceramic coating, interior deep clean..."
+                        className="bg-[#0A0A0A] border-white/10 min-h-[120px] rounded-xl text-white focus:border-brand-amber/50"
                       />
-                    </div>
-                    <div>
-                      <Label className="text-white/70 mb-3 block">Interested in early access?</Label>
-                      <div className="grid grid-cols-3 gap-3">
-                        {["Yes", "Maybe", "No"].map((o) => radio("early_access_interest", o))}
-                      </div>
-                      {fieldError("early_access_interest")}
                     </div>
                   </div>
                 )}
@@ -434,7 +307,7 @@ export default function SurveyPage() {
                     step > 1 ? "flex-[2]" : "flex-1"
                   )}
                 >
-                  Next <ChevronRight className="w-5 h-5 ml-1" />
+                  Next Step <ChevronRight className="w-5 h-5 ml-1" />
                 </Button>
               ) : (
                 <Button
@@ -445,7 +318,11 @@ export default function SurveyPage() {
                     step > 1 ? "flex-[2]" : "flex-1"
                   )}
                 >
-                  {isSubmitting ? "Submitting..." : "Submit & Win 🐝"}
+                  {isSubmitting ? "Submitting..." : (
+                    <span className="flex items-center gap-2">
+                      Submit & Enter Giveaway <Sparkles className="w-5 h-5" />
+                    </span>
+                  )}
                 </Button>
               )}
             </div>
