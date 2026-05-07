@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { Phone, Mail, MapPin, Search } from "lucide-react";
+import { Phone, Mail, MapPin, Search, Calendar, User, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface WaitlistTableProps {
   data: any[];
@@ -27,7 +28,8 @@ export const WaitlistTable = ({ data, search }: WaitlistTableProps) => {
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
-      <Card className="bg-[#0A0A0A] border-white/5 overflow-hidden rounded-3xl">
+      {/* Desktop Table View */}
+      <Card className="bg-[#0A0A0A] border-white/5 overflow-hidden rounded-3xl hidden md:block">
         <table className="w-full text-left">
           <thead className="bg-white/5 text-[10px] uppercase tracking-widest font-bold text-white/30 border-b border-white/5">
             <tr>
@@ -79,6 +81,42 @@ export const WaitlistTable = ({ data, search }: WaitlistTableProps) => {
         </table>
         {filtered.length === 0 && <EmptyState />}
       </Card>
+
+      {/* Mobile Card View */}
+      <div className="md:hidden space-y-4">
+        {filtered.map((item, i) => (
+          <Card 
+            key={i} 
+            onClick={() => handleRowClick(item.id)}
+            className="bg-[#0A0A0A] border-white/5 p-6 rounded-3xl flex flex-col gap-4 active:scale-95 transition-transform"
+          >
+            <div className="flex justify-between items-start">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-brand-amber/10 flex items-center justify-center font-bold text-brand-amber">
+                    {item.name[0]}
+                </div>
+                <div>
+                    <h4 className="font-bold text-white">{item.name}</h4>
+                    <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Joined {new Date(item.created_at).toLocaleDateString()}</p>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-white/20" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
+                <div className="space-y-1">
+                    <p className="text-[10px] text-white/20 uppercase font-bold tracking-tighter">Phone</p>
+                    <p className="text-sm text-white/70 flex items-center gap-2"><Phone className="w-3 h-3 text-brand-amber" /> {item.phone}</p>
+                </div>
+                <div className="space-y-1 text-right">
+                    <p className="text-[10px] text-white/20 uppercase font-bold tracking-tighter">Area</p>
+                    <p className="text-sm text-white/70 flex items-center gap-2 justify-end"><MapPin className="w-3 h-3 text-brand-amber" /> {item.area}</p>
+                </div>
+            </div>
+          </Card>
+        ))}
+        {filtered.length === 0 && <EmptyState />}
+      </div>
     </motion.div>
   );
 };
