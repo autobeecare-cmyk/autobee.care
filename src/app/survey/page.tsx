@@ -240,6 +240,7 @@ export default function SurveyPage() {
                           "Price changes every time",
                           "No way to book exact slots",
                           "Driving/Traffic to the center",
+                          "Something else",
                         ].map((p) => radio("biggest_pain_point", p))}
                       </div>
                       {fieldError("biggest_pain_point")}

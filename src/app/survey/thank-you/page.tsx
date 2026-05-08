@@ -18,7 +18,7 @@ export default function ThankYouPage() {
 
     const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
-    const interval: any = setInterval(() => {
+    const interval: ReturnType<typeof setInterval> = setInterval(() => {
       const timeLeft = animationEnd - Date.now();
 
       if (timeLeft <= 0) {
@@ -34,7 +34,7 @@ export default function ThankYouPage() {
   }, []);
 
   const share = () => {
-    navigator.clipboard.writeText("https://autobee.care/survey");
+    navigator.clipboard.writeText(window.location.origin + "/survey");
     toast.success("Link copied!", {
       description: "Share it with your friends and help us grow!",
     });

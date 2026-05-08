@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,7 @@ import * as z from "zod";
 import { cn } from "@/lib/utils";
 import { Sparkles, ArrowLeft, ChevronRight, CheckCircle2, ShieldCheck, Zap, Clock } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -69,6 +70,22 @@ export default function JoinWaitlistPage() {
 
   const selectedArea = watch("area");
 
+  // Load draft
+  useEffect(() => {
+    const saved = localStorage.getItem("autobee_waitlist_draft");
+    if (saved) {
+      try { reset(JSON.parse(saved)); } catch {}
+    }
+  }, []);
+
+  // Save draft
+  useEffect(() => {
+    const sub = watch((value) => {
+      localStorage.setItem("autobee_waitlist_draft", JSON.stringify(value));
+    });
+    return () => sub.unsubscribe();
+  }, [watch]);
+
   const onSubmit = async (data: WaitlistValues) => {
     setLoading(true);
     try {
@@ -80,11 +97,12 @@ export default function JoinWaitlistPage() {
 
       if (!response.ok) throw new Error("Submission failed");
 
+      localStorage.removeItem("autobee_waitlist_draft");
       toast.success("Welcome to the Hive!", {
         description: "You're officially on the list for early access.",
       });
       reset();
-      router.push("/survey/thank-you");
+      router.push("/join/thank-you");
     } catch {
       toast.error("Something went wrong", {
         description: "Please try again later.",
@@ -106,7 +124,7 @@ export default function JoinWaitlistPage() {
           <Logo />
           <div className="hidden md:flex items-center gap-2 bg-white/5 rounded-full px-4 py-1.5 border border-white/10">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/60">542 joined in Trivandrum</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/60">500+ joined in Trivandrum</span>
           </div>
         </div>
       </nav>
@@ -201,9 +219,22 @@ export default function JoinWaitlistPage() {
                     <Input
                       {...register("phone")}
                       placeholder="+91 98765 43210"
+                      type="tel"
+                      inputMode="numeric"
                       className="bg-white/5 border-white/10 h-14 rounded-2xl text-white placeholder:text-white/20 px-6 focus:bg-white/10 focus:border-brand-amber transition-all"
                     />
                     {errors.phone && <p className="text-red-400 text-xs ml-1">{errors.phone.message}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-white/60 ml-1 text-sm">Email <span className="text-white/30">(Optional)</span></Label>
+                    <Input
+                      {...register("email")}
+                      placeholder="your@email.com"
+                      type="email"
+                      className="bg-white/5 border-white/10 h-14 rounded-2xl text-white placeholder:text-white/20 px-6 focus:bg-white/10 focus:border-brand-amber transition-all"
+                    />
+                    {errors.email && <p className="text-red-400 text-xs ml-1">{errors.email.message}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -257,6 +288,3 @@ export default function JoinWaitlistPage() {
   );
 }
 
-function Label({ children, className }: { children: React.ReactNode, className?: string }) {
-  return <label className={cn("block font-medium", className)}>{children}</label>;
-}

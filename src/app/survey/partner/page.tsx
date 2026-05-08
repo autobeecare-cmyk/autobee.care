@@ -16,18 +16,20 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Store, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const STEPS = 4;
+const STEPS = 5;
 
 const STEP_TITLES = [
   "About Your Center",
-  "Your Business",
+  "Volume & Capacity",
+  "Pricing & Staff",
   "Operations & Marketing",
   "Partnership Interest",
 ];
 
 const STEP_SUBTITLES = [
   "Tell us about your wash center",
-  "Help us understand your daily operations",
+  "Your daily vehicle throughput",
+  "Services and team size",
   "How you run your business today",
   "Let's talk about working together",
 ];
@@ -91,9 +93,10 @@ export default function PartnerSurveyPage() {
   const getFieldsForStep = (s: number): (keyof PartnerSurveyValues)[] => {
     switch (s) {
       case 1: return ["center_name", "owner_name", "phone", "area", "years_in_business"];
-      case 2: return ["cars_per_day", "bikes_per_day", "peak_hours", "basic_wash_price", "staff_count"];
-      case 3: return ["has_signage", "on_google_maps", "uses_digital_tool", "customer_acquisition", "daily_revenue_range", "slow_day_frequency"];
-      case 4: return ["want_more_customers", "open_to_commission", "need_management_software", "open_to_partnership"];
+      case 2: return ["cars_per_day", "bikes_per_day", "peak_hours"];
+      case 3: return ["basic_wash_price", "staff_count"];
+      case 4: return ["has_signage", "on_google_maps", "uses_digital_tool", "customer_acquisition", "daily_revenue_range", "slow_day_frequency"];
+      case 5: return ["want_more_customers", "open_to_commission", "need_management_software", "open_to_partnership"];
       default: return [];
     }
   };
@@ -229,7 +232,7 @@ export default function PartnerSurveyPage() {
                   </div>
                 )}
 
-                {/* ── STEP 2 — Your Business ── */}
+                {/* ── STEP 2 — Volume & Capacity ── */}
                 {step === 2 && (
                   <div className="space-y-5">
                     <div>
@@ -253,6 +256,12 @@ export default function PartnerSurveyPage() {
                       </div>
                       {err("peak_hours")}
                     </div>
+                  </div>
+                )}
+
+                {/* ── STEP 3 — Pricing & Staff ── */}
+                {step === 3 && (
+                  <div className="space-y-5">
                     <div>
                       <Label className="text-white/70 mb-3 block">Basic wash price (per car)</Label>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -261,11 +270,11 @@ export default function PartnerSurveyPage() {
                       {err("basic_wash_price")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-2 block">Premium wash price (optional)</Label>
+                      <Label className="text-white/70 mb-2 block">Premium wash price <span className="text-white/30">(optional)</span></Label>
                       <Input {...register("premium_wash_price")} placeholder="e.g. ₹400 for full wash + interior" className="bg-[#0A0A0A] border-white/10 h-14 text-white" />
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-2 block">Add-ons offered (optional)</Label>
+                      <Label className="text-white/70 mb-2 block">Add-ons offered <span className="text-white/30">(optional)</span></Label>
                       <Input {...register("add_ons_offered")} placeholder="e.g. waxing, vacuum, ceramic coat" className="bg-[#0A0A0A] border-white/10 h-14 text-white" />
                     </div>
                     <div>
@@ -278,8 +287,8 @@ export default function PartnerSurveyPage() {
                   </div>
                 )}
 
-                {/* ── STEP 3 — Operations & Marketing ── */}
-                {step === 3 && (
+                {/* ── STEP 4 — Operations & Marketing ── */}
+                {step === 4 && (
                   <div className="space-y-5">
                     <div>
                       <Label className="text-white/70 mb-3 block">Do you have a signboard / branding?</Label>
@@ -310,7 +319,7 @@ export default function PartnerSurveyPage() {
                       {err("customer_acquisition")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-2 block">How do you keep repeat customers? (optional)</Label>
+                      <Label className="text-white/70 mb-2 block">How do you keep repeat customers? <span className="text-white/30">(optional)</span></Label>
                       <Input {...register("retention_method")} placeholder="e.g. loyalty cards, WhatsApp reminders" className="bg-[#0A0A0A] border-white/10 h-14 text-white" />
                     </div>
                     <div>
@@ -330,8 +339,8 @@ export default function PartnerSurveyPage() {
                   </div>
                 )}
 
-                {/* ── STEP 4 — Partnership Interest ── */}
-                {step === 4 && (
+                {/* ── STEP 5 — Partnership Interest ── */}
+                {step === 5 && (
                   <div className="space-y-5">
                     {/* Partnership card */}
                     <div className="bg-brand-amber/10 border border-brand-amber/20 rounded-2xl p-5 mb-2">
@@ -358,9 +367,9 @@ export default function PartnerSurveyPage() {
                       {err("open_to_commission")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-3 block">Acceptable commission rate</Label>
+                      <Label className="text-white/70 mb-3 block">Acceptable commission rate <span className="text-white/30">(optional)</span></Label>
                       <div className="grid grid-cols-2 gap-3">
-                        {["5-8%", "8-12%", "12-15%", "Depends on volume", "Not open to commission"].map((c) => radio("acceptable_commission" as keyof PartnerSurveyValues, c))}
+                        {["5-8%", "8-12%", "12-15%", "Depends on volume", "Not open to commission"].map((c) => radio("acceptable_commission", c))}
                       </div>
                     </div>
                     <div>
@@ -371,7 +380,7 @@ export default function PartnerSurveyPage() {
                       {err("need_management_software")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-2 block">Where do you source your raw materials? (optional)</Label>
+                      <Label className="text-white/70 mb-2 block">Where do you source your raw materials? <span className="text-white/30">(optional)</span></Label>
                       <Input {...register("raw_materials_source")} placeholder="e.g. local supplier, wholesale market" className="bg-[#0A0A0A] border-white/10 h-14 text-white" />
                     </div>
                     <div>
@@ -382,12 +391,13 @@ export default function PartnerSurveyPage() {
                           "Yes — but tell me more first",
                           "Maybe — need more info",
                           "Not right now",
+                          "No, not interested",
                         ].map((o) => radio("open_to_partnership", o))}
                       </div>
                       {err("open_to_partnership")}
                     </div>
                     <div>
-                      <Label className="text-white/70 mb-2 block">Any questions or comments? (optional)</Label>
+                      <Label className="text-white/70 mb-2 block">Any questions or comments? <span className="text-white/30">(optional)</span></Label>
                       <Textarea
                         {...register("notes")}
                         placeholder="Anything you'd like us to know..."

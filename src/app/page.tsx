@@ -15,6 +15,7 @@ export default function Home() {
       <Problem />
       <Solution />
       <Partners />
+      <SurveyCTA />
       <Waitlist />
       <Footer />
     </main>
