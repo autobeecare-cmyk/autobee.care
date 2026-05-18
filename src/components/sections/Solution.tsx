@@ -33,7 +33,7 @@ export const Solution = () => {
   return (
     <section className="py-24 bg-black relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-amber/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,_rgba(245,183,0,0.08)_0%,_transparent_60%)] rounded-full pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div

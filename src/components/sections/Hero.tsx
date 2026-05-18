@@ -10,7 +10,7 @@ export const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-amber/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,_rgba(245,183,0,0.08)_0%,_transparent_60%)] rounded-full pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
         <motion.div
