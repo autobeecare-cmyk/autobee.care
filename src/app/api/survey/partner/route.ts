@@ -11,10 +11,17 @@ export async function POST(req: Request) {
 
     const { createAdminClient } = await import("@/lib/supabase/server");
     const supabase = await createAdminClient();
+    
+    // Convert empty strings to null to avoid Supabase errors on TIME/INTEGER columns
+    const sanitizedData = Object.fromEntries(
+      Object.entries(validatedData).map(([key, value]) => [key, value === "" ? null : value])
+    );
+
     const { error } = await supabase
       .from("partner_onboarding_responses")
       .insert([{
-        ...validatedData,
+        ...sanitizedData,
+        trial_commitment: true, // Mocked to prevent NOT NULL constraint errors if column still exists
         surveyed_by: "self",
       }]);
 

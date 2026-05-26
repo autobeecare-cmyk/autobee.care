@@ -66,17 +66,8 @@ export const partnerSurveySchema = z.object({
   app_comfort_level: z.string().min(1, "Required"),
   response_time: z.string().min(1, "Required"),
 
-  // SECTION 7: COMMITMENT & PAYMENT
-  trial_commitment: z.boolean(),
-  bank_account_name: z.string().optional(),
-  bank_name: z.string().optional(),
-  bank_account_number: z.string().optional(),
-  bank_account_type: z.string().optional(),
-  bank_ifsc_code: z.string().optional(),
-  upi_id: z.string().optional(),
+  // SECTION 7: CONFIRMATION & NEXT STEPS
   contact_preference: z.string().min(1, "Required"),
-
-  // SECTION 8: CONFIRMATION & NEXT STEPS
   confirmed_ready: z.boolean().refine((val) => val === true, "You must confirm to proceed"),
   additional_comments: z.string().optional(),
 });

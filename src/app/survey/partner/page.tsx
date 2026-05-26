@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Store, Sparkles, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const STEPS = 8;
+const STEPS = 7;
 
 const STEP_TITLES = [
   "Business Information",
@@ -26,7 +26,6 @@ const STEP_TITLES = [
   "Current Customer Acquisition",
   "Walk-in Buffer & Slot Strategy",
   "Technical Readiness",
-  "Commitment & Payment",
   "Confirmation & Next Steps"
 ];
 
@@ -37,7 +36,6 @@ const STEP_SUBTITLES = [
   "How are customers finding you today?",
   "Managing your daily capacity",
   "Getting set up with the app",
-  "Let's finalize the details",
   "Ready to go live"
 ];
 
@@ -103,8 +101,7 @@ export default function PartnerSurveyPage() {
       case 4: return ["daily_vehicles", "repeat_customer_percentage", "acquisition_channels", "biggest_pain_point"];
       case 5: return ["walk_in_percentage", "walk_in_buffer_percent"];
       case 6: return ["has_smartphone", "app_comfort_level", "response_time"];
-      case 7: return ["trial_commitment", "bank_account_name", "bank_name", "bank_account_number", "bank_account_type", "bank_ifsc_code", "upi_id", "contact_preference"];
-      case 8: return ["confirmed_ready", "additional_comments"];
+      case 7: return ["contact_preference", "confirmed_ready", "additional_comments"];
       default: return [];
     }
   };
@@ -558,73 +555,17 @@ export default function PartnerSurveyPage() {
                   </div>
                 )}
 
-                {/* ── STEP 7 — Commitment & Payment ── */}
+                {/* ── STEP 7 — Confirmation & Next Steps ── */}
                 {step === 7 && (
                   <div className="space-y-6">
-                    <div className="bg-brand-amber/10 border border-brand-amber/20 rounded-2xl p-5 mb-2">
-                      <p className="font-bold text-brand-amber mb-2 flex items-center gap-2">
-                        <Sparkles className="w-4 h-4" /> Phase 1 Trial (6 Months)
-                      </p>
-                      <p className="text-sm text-white/70 leading-relaxed mb-4">
-                        Phase 1 trial includes a ₹1,000 registration fee (deducted in small weekly amounts from your Autobee payouts) and 0% commission on bookings for 6 months. After 6 months, we move to a revenue sharing model (15-20% per booking).
-                      </p>
-                      <Label className="text-white font-bold block mb-3">Can you commit to 6 months on AutoBee as a trial period?</Label>
-                      <div className="grid grid-cols-2 gap-3">
-                        {booleanRadio("trial_commitment", "Yes, I commit", "No")}
-                      </div>
-                      {err("trial_commitment")}
-                    </div>
-
-                    {watch("trial_commitment") && (
-                      <div className="mt-8 space-y-5 animate-in fade-in slide-in-from-bottom-4">
-                        <h3 className="text-xl font-bold text-white border-b border-white/10 pb-2">Bank Account Details (Optional)</h3>
-                        <p className="text-sm text-white/40">We'll settle your earnings weekly to this account. UPI is faster if available.</p>
-                        
-                        <div>
-                          <Label className="text-white/70 mb-2 block">Account Holder Name</Label>
-                          <Input {...register("bank_account_name")} placeholder="As per bank records" className="bg-[#0A0A0A] border-white/10 h-12 text-white" />
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div>
-                            <Label className="text-white/70 mb-2 block">Bank Name</Label>
-                            <Input {...register("bank_name")} placeholder="e.g. HDFC Bank" className="bg-[#0A0A0A] border-white/10 h-12 text-white" />
-                          </div>
-                          <div>
-                            <Label className="text-white/70 mb-2 block">Account Type</Label>
-                            <div className="flex gap-2">
-                              <Button type="button" variant="outline" onClick={() => setValue("bank_account_type", "Saving")} className={cn("flex-1 bg-[#0A0A0A] border-white/10", watch("bank_account_type") === "Saving" && "border-brand-amber text-brand-amber")}>Saving</Button>
-                              <Button type="button" variant="outline" onClick={() => setValue("bank_account_type", "Current")} className={cn("flex-1 bg-[#0A0A0A] border-white/10", watch("bank_account_type") === "Current" && "border-brand-amber text-brand-amber")}>Current</Button>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <Label className="text-white/70 mb-2 block">Account Number</Label>
-                          <Input {...register("bank_account_number")} className="bg-[#0A0A0A] border-white/10 h-12 text-white" />
-                        </div>
-                        <div>
-                          <Label className="text-white/70 mb-2 block">IFSC Code</Label>
-                          <Input {...register("bank_ifsc_code")} placeholder="e.g. HDFC0001234" className="bg-[#0A0A0A] border-white/10 h-12 text-white uppercase" />
-                        </div>
-                        <div>
-                          <Label className="text-white/70 mb-2 block">UPI ID (Optional)</Label>
-                          <Input {...register("upi_id")} placeholder="yourname@bank" className="bg-[#0A0A0A] border-white/10 h-12 text-white" />
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="pt-4">
+                    <div>
                       <Label className="text-white/70 mb-3 block">How do you prefer to be contacted for support?</Label>
                       <div className="grid grid-cols-2 gap-3">
                         {["WhatsApp", "Phone call", "Email", "In-person visit"].map((opt) => radio("contact_preference", opt))}
                       </div>
                       {err("contact_preference")}
                     </div>
-                  </div>
-                )}
 
-                {/* ── STEP 8 — Confirmation ── */}
-                {step === 8 && (
-                  <div className="space-y-6">
                     <div className="bg-[#111] border border-[#222] p-5 rounded-xl">
                       <h3 className="font-bold text-white mb-4 text-lg">Review & Confirmation</h3>
                       <div className="space-y-4">
