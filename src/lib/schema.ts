@@ -24,39 +24,60 @@ export type OwnerSurveyValues = z.infer<typeof ownerSurveySchema>;
 // ── Partner Survey Schema ──────────────────────────────────────────────────
 
 export const partnerSurveySchema = z.object({
-  // Step 1: About Your Center
-  center_name: z.string().min(2, "Center name is required"),
+  // SECTION 1: BUSINESS INFORMATION
+  business_name: z.string().min(2, "Business name is required"),
   owner_name: z.string().min(2, "Owner name is required"),
-  phone: z.string().regex(/^(?:\+91)?[6-9]\d{9}$/, "Valid Indian phone number required"),
-  area: z.string().min(1, "Please select your area"),
+  phone_number: z.string().regex(/^(?:\+91)?[6-9]\d{9}$/, "Valid Indian phone number required"),
+  address: z.string().min(5, "Full address is required"),
   years_in_business: z.string().min(1, "Required"),
 
-  // Step 2: Your Business
-  cars_per_day: z.string().min(1, "Required"),
-  bikes_per_day: z.string().min(1, "Required"),
-  peak_hours: z.string().min(1, "Required"),
-  basic_wash_price: z.string().min(1, "Required"),
-  premium_wash_price: z.string().optional(),
-  add_ons_offered: z.string().optional(),
-  staff_count: z.string().min(1, "Required"),
+  // SECTION 2: OPERATING HOURS & CAPACITY
+  vehicle_capacity: z.coerce.number().min(1).max(20, "Must be between 1 and 20"),
+  regular_open_time: z.string().min(1, "Required"),
+  regular_close_time: z.string().min(1, "Required"),
+  has_weekend_hours: z.boolean(),
+  saturday_open_time: z.string().optional(),
+  saturday_close_time: z.string().optional(),
+  sunday_open_time: z.string().optional(),
+  sunday_close_time: z.string().optional(),
+  weekly_off_day: z.string().optional(),
+  has_lunch_break: z.boolean(),
+  lunch_start_time: z.string().optional(),
+  lunch_end_time: z.string().optional(),
 
-  // Step 3: Operations & Marketing
-  has_signage: z.string().min(1, "Required"),
-  on_google_maps: z.string().min(1, "Required"),
-  uses_digital_tool: z.string().min(1, "Required"),
-  customer_acquisition: z.string().min(1, "Required"),
-  retention_method: z.string().optional(),
-  daily_revenue_range: z.string().min(1, "Required"),
-  slow_day_frequency: z.string().min(1, "Required"),
+  // SECTION 3: SERVICES & DURATION
+  services_offered: z.array(z.string()).min(1, "Select at least one service"),
+  service_durations: z.record(z.string(), z.coerce.number()),
+  service_prices: z.record(z.string(), z.coerce.number()).optional(),
 
-  // Step 4: Partnership Interest
-  want_more_customers: z.string().min(1, "Required"),
-  open_to_commission: z.string().min(1, "Required"),
-  acceptable_commission: z.string().optional(),
-  need_management_software: z.string().min(1, "Required"),
-  raw_materials_source: z.string().optional(),
-  open_to_partnership: z.string().min(1, "Required"),
-  notes: z.string().optional(),
+  // SECTION 4: CURRENT CUSTOMER ACQUISITION
+  daily_vehicles: z.coerce.number().min(1).max(200, "Must be between 1 and 200"),
+  repeat_customer_percentage: z.string().min(1, "Required"),
+  acquisition_channels: z.array(z.string()).min(1, "Select at least one channel"),
+  biggest_pain_point: z.string().optional(),
+
+  // SECTION 5: WALK-IN BUFFER & SLOT STRATEGY
+  walk_in_percentage: z.string().min(1, "Required"),
+  walk_in_buffer_percent: z.coerce.number().min(0).max(50),
+
+  // SECTION 6: TECHNICAL READINESS
+  has_smartphone: z.boolean(),
+  app_comfort_level: z.string().min(1, "Required"),
+  response_time: z.string().min(1, "Required"),
+
+  // SECTION 7: COMMITMENT & PAYMENT
+  trial_commitment: z.boolean(),
+  bank_account_name: z.string().optional(),
+  bank_name: z.string().optional(),
+  bank_account_number: z.string().optional(),
+  bank_account_type: z.string().optional(),
+  bank_ifsc_code: z.string().optional(),
+  upi_id: z.string().optional(),
+  contact_preference: z.string().min(1, "Required"),
+
+  // SECTION 8: CONFIRMATION & NEXT STEPS
+  confirmed_ready: z.boolean().refine((val) => val === true, "You must confirm to proceed"),
+  additional_comments: z.string().optional(),
 });
 
 export type PartnerSurveyValues = z.infer<typeof partnerSurveySchema>;

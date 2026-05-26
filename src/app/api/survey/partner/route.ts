@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const { createAdminClient } = await import("@/lib/supabase/server");
     const supabase = await createAdminClient();
     const { error } = await supabase
-      .from("partner_responses")
+      .from("partner_onboarding_responses")
       .insert([{
         ...validatedData,
         surveyed_by: "self",
