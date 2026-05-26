@@ -42,12 +42,15 @@ const STEP_SUBTITLES = [
 ];
 
 const SERVICES_LIST = [
-  { id: "exterior_wash", label: "Exterior wash (quick rinse)", defaultDuration: 30 },
-  { id: "interior_exterior_wash", label: "Interior + Exterior wash (full wash)", defaultDuration: 60 },
-  { id: "full_detailing", label: "Full detailing (wash + interior cleaning + polish)", defaultDuration: 120 },
-  { id: "premium_detailing", label: "Premium detailing (wash + interior + coating + wax)", defaultDuration: 180 },
+  { id: "car_exterior_wash", label: "Car: Exterior wash (quick rinse)", defaultDuration: 30 },
+  { id: "car_interior_exterior_wash", label: "Car: Interior + Exterior wash", defaultDuration: 60 },
+  { id: "car_full_detailing", label: "Car: Full detailing", defaultDuration: 120 },
+  { id: "car_premium_detailing", label: "Car: Premium detailing", defaultDuration: 180 },
+  { id: "bike_water_wash", label: "Bike: Water wash", defaultDuration: 20 },
+  { id: "bike_foam_wash", label: "Bike: Foam wash + Polish", defaultDuration: 40 },
+  { id: "bike_detailing", label: "Bike: Full detailing", defaultDuration: 90 },
   { id: "ac_service", label: "AC service & maintenance", defaultDuration: 90 },
-  { id: "mechanical_work", label: "Mechanical work (general repair)", defaultDuration: 150 }, // typical range midpoint
+  { id: "mechanical_work", label: "Mechanical work (general repair)", defaultDuration: 150 },
   { id: "tire_service", label: "Tire service", defaultDuration: 45 },
   { id: "battery_service", label: "Battery service", defaultDuration: 30 },
   { id: "other", label: "Other", defaultDuration: 60 },
@@ -95,7 +98,7 @@ export default function PartnerSurveyPage() {
   const getFieldsForStep = (s: number): (keyof PartnerSurveyValues)[] => {
     switch (s) {
       case 1: return ["business_name", "owner_name", "phone_number", "address", "years_in_business"];
-      case 2: return ["vehicle_capacity", "regular_open_time", "regular_close_time", "has_weekend_hours", "saturday_open_time", "saturday_close_time", "sunday_open_time", "sunday_close_time", "weekly_off_day", "has_lunch_break", "lunch_start_time", "lunch_end_time"];
+      case 2: return ["vehicle_capacity", "staff_count", "regular_open_time", "regular_close_time", "has_weekend_hours", "saturday_open_time", "saturday_close_time", "sunday_open_time", "sunday_close_time", "weekly_off_day", "has_lunch_break", "lunch_start_time", "lunch_end_time"];
       case 3: return ["services_offered", "service_durations", "service_prices"];
       case 4: return ["daily_vehicles", "repeat_customer_percentage", "acquisition_channels", "biggest_pain_point"];
       case 5: return ["walk_in_percentage", "walk_in_buffer_percent"];
@@ -200,6 +203,7 @@ export default function PartnerSurveyPage() {
 
   // Render logic for Step 5 walk-in buffer
   const capacity = watch("vehicle_capacity") || 0;
+  const staffCount = watch("staff_count") || capacity;
   const bufferPercent = watch("walk_in_buffer_percent") || 0;
   // Approximating operating hours if available
   const openTimeStr = watch("regular_open_time") || "09:00";
@@ -219,7 +223,8 @@ export default function PartnerSurveyPage() {
     }
   } catch(e) {}
   
-  const estimatedTotalSlots = Math.max(1, Math.floor(capacity * hours));
+  const effectiveCapacity = Math.min(capacity, staffCount > 0 ? staffCount : capacity);
+  const estimatedTotalSlots = Math.max(1, Math.floor(effectiveCapacity * hours));
   const reservedSlots = Math.floor(estimatedTotalSlots * (bufferPercent / 100));
   const bookableSlots = estimatedTotalSlots - reservedSlots;
 
@@ -316,6 +321,13 @@ export default function PartnerSurveyPage() {
                       <p className="text-white/50 text-sm mb-4">How many vehicles can you service at the same time across all your bays/stations?</p>
                       <Input {...register("vehicle_capacity")} type="number" min="1" max="20" placeholder="e.g. 4" className="bg-[#0A0A0A] border-white/10 h-14 text-white text-lg w-32" />
                       {err("vehicle_capacity")}
+                    </div>
+
+                    <div className="bg-white/5 border border-white/10 p-5 rounded-2xl">
+                      <Label className="text-white/90 mb-2 block font-semibold text-lg">Staff Count</Label>
+                      <p className="text-white/50 text-sm mb-4">How many dedicated washing/detailing staff do you have on a regular day?</p>
+                      <Input {...register("staff_count")} type="number" min="1" max="50" placeholder="e.g. 2" className="bg-[#0A0A0A] border-white/10 h-14 text-white text-lg w-32" />
+                      {err("staff_count")}
                     </div>
                     
                     <div>
@@ -554,7 +566,7 @@ export default function PartnerSurveyPage() {
                         <Sparkles className="w-4 h-4" /> Phase 1 Trial (6 Months)
                       </p>
                       <p className="text-sm text-white/70 leading-relaxed mb-4">
-                        Phase 1 trial includes a ₹1,000 registration fee (split weekly) and 0% commission on bookings for 6 months. After 6 months, we move to a revenue sharing model (15-20% per booking).
+                        Phase 1 trial includes a ₹1,000 registration fee (deducted in small weekly amounts from your Autobee payouts) and 0% commission on bookings for 6 months. After 6 months, we move to a revenue sharing model (15-20% per booking).
                       </p>
                       <Label className="text-white font-bold block mb-3">Can you commit to 6 months on AutoBee as a trial period?</Label>
                       <div className="grid grid-cols-2 gap-3">
@@ -565,7 +577,7 @@ export default function PartnerSurveyPage() {
 
                     {watch("trial_commitment") && (
                       <div className="mt-8 space-y-5 animate-in fade-in slide-in-from-bottom-4">
-                        <h3 className="text-xl font-bold text-white border-b border-white/10 pb-2">Bank Account Details (For Weekly Settlement)</h3>
+                        <h3 className="text-xl font-bold text-white border-b border-white/10 pb-2">Bank Account Details (Optional)</h3>
                         <p className="text-sm text-white/40">We'll settle your earnings weekly to this account. UPI is faster if available.</p>
                         
                         <div>
@@ -624,7 +636,7 @@ export default function PartnerSurveyPage() {
                           <div className="text-sm text-white/80 leading-snug">
                             <p className="mb-2">I have reviewed all the information above and confirm it is accurate.</p>
                             <p className="mb-2">I am ready to start Phase 1 (6-month trial).</p>
-                            <p>I understand the ₹1,000 registration will be charged weekly over 26 weeks.</p>
+                            <p>I understand the ₹1,000 registration will be deducted in small weekly amounts from my Autobee payouts.</p>
                           </div>
                         </label>
                       </div>

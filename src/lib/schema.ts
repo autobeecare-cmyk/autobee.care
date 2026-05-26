@@ -33,6 +33,7 @@ export const partnerSurveySchema = z.object({
 
   // SECTION 2: OPERATING HOURS & CAPACITY
   vehicle_capacity: z.coerce.number().min(1).max(20, "Must be between 1 and 20"),
+  staff_count: z.coerce.number().min(1, "Required"),
   regular_open_time: z.string().min(1, "Required"),
   regular_close_time: z.string().min(1, "Required"),
   has_weekend_hours: z.boolean(),
