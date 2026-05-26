@@ -1,6 +1,8 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const supabase = await createAdminClient();
@@ -12,7 +14,7 @@ export async function GET() {
       { data: waitlist, error: waitlistError }
     ] = await Promise.all([
       supabase.from("owner_responses").select("*").order("created_at", { ascending: false }),
-      supabase.from("partner_responses").select("*").order("created_at", { ascending: false }),
+      supabase.from("partner_onboarding_responses").select("*").order("created_at", { ascending: false }),
       supabase.from("waitlist").select("*").order("created_at", { ascending: false })
     ]);
 

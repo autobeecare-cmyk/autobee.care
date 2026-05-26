@@ -55,7 +55,7 @@ export default function AdminDetailPage() {
   }
 
   // Define which keys to hide in the dynamic sections
-  const hiddenKeys = ["id", "created_at", "name", "owner_name", "center_name", "phone", "email"];
+  const hiddenKeys = ["id", "created_at", "name", "owner_name", "center_name", "business_name", "phone", "phone_number", "email", "address", "area"];
 
   return (
     <div className="min-h-screen bg-[#050505] text-white font-instrument pb-20">
@@ -97,10 +97,10 @@ export default function AdminDetailPage() {
                     <Database className="w-3 h-3" /> ID: {id?.toString().slice(0, 8)}...
                   </span>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-outfit font-bold">{data.name || data.center_name || "Anonymous"}</h1>
+                <h1 className="text-4xl md:text-5xl font-outfit font-bold">{data.name || data.business_name || data.center_name || "Anonymous"}</h1>
                 <div className="flex flex-wrap gap-4 mt-4">
                   <div className="flex items-center gap-2 text-white/50 text-sm">
-                    <Phone className="w-4 h-4 text-brand-amber" /> {data.phone}
+                    <Phone className="w-4 h-4 text-brand-amber" /> {data.phone || data.phone_number}
                   </div>
                   {data.email && (
                     <div className="flex items-center gap-2 text-white/50 text-sm">
@@ -108,7 +108,7 @@ export default function AdminDetailPage() {
                     </div>
                   )}
                   <div className="flex items-center gap-2 text-white/50 text-sm">
-                    <MapPin className="w-4 h-4 text-brand-amber" /> {data.area}
+                    <MapPin className="w-4 h-4 text-brand-amber" /> {data.area || data.address}
                   </div>
                 </div>
               </div>

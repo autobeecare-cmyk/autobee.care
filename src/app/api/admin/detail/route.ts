@@ -1,6 +1,8 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
@@ -16,7 +18,7 @@ export async function GET(req: Request) {
     let table = "";
     if (type === "waitlist") table = "waitlist";
     else if (type === "owners") table = "owner_responses";
-    else if (type === "partners") table = "partner_responses";
+    else if (type === "partners") table = "partner_onboarding_responses";
     else return NextResponse.json({ error: "Invalid type" }, { status: 400 });
 
     const { data, error } = await supabase

@@ -14,8 +14,8 @@ interface PartnersTableProps {
 export const PartnersTable = ({ data, search }: PartnersTableProps) => {
   const router = useRouter();
   const filtered = (data || []).filter(u => 
-    u.center_name?.toLowerCase().includes(search.toLowerCase()) || 
-    u.owner_name?.toLowerCase().includes(search.toLowerCase())
+    (u.business_name || "").toLowerCase().includes(search.toLowerCase()) || 
+    (u.owner_name || "").toLowerCase().includes(search.toLowerCase())
   );
 
   const handleRowClick = (id: string) => {
@@ -52,17 +52,17 @@ export const PartnersTable = ({ data, search }: PartnersTableProps) => {
                       <Store className="w-5 h-5 text-brand-amber" />
                     </div>
                     <div>
-                      <p className="font-bold">{item.center_name}</p>
-                      <p className="text-[10px] text-white/40">{item.area}</p>
+                      <p className="font-bold">{item.business_name}</p>
+                      <p className="text-[10px] text-white/40">{item.address}</p>
                     </div>
                   </div>
                 </td>
                 <td className="px-8 py-6">
                   <div className="text-sm font-medium">{item.owner_name}</div>
-                  <div className="text-[10px] text-white/40">{item.phone}</div>
+                  <div className="text-[10px] text-white/40">{item.phone_number}</div>
                 </td>
                 <td className="px-8 py-6 text-sm">
-                  {item.cars_per_day} cars / day
+                  {item.daily_vehicles} cars / day
                 </td>
                 <td className="px-8 py-6 text-right">
                    <div className="flex items-center justify-end gap-2 text-xs font-bold text-green-500">
@@ -90,9 +90,9 @@ export const PartnersTable = ({ data, search }: PartnersTableProps) => {
                     <Store className="w-6 h-6 text-brand-amber" />
                 </div>
                 <div>
-                    <h4 className="font-bold text-white text-lg">{item.center_name}</h4>
+                    <h4 className="font-bold text-white text-lg">{item.business_name}</h4>
                     <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold flex items-center gap-1">
-                        <MapPin className="w-3 h-3" /> {item.area}
+                        <MapPin className="w-3 h-3" /> {item.address}
                     </p>
                 </div>
               </div>
@@ -106,7 +106,7 @@ export const PartnersTable = ({ data, search }: PartnersTableProps) => {
                 </div>
                 <div className="space-y-1 text-right">
                     <p className="text-[10px] text-white/20 uppercase font-bold tracking-tighter">Volume</p>
-                    <p className="text-sm text-white/70 flex items-center gap-2 justify-end font-bold"><Car className="w-3 h-3 text-brand-amber" /> {item.cars_per_day}/day</p>
+                    <p className="text-sm text-white/70 flex items-center gap-2 justify-end font-bold"><Car className="w-3 h-3 text-brand-amber" /> {item.daily_vehicles}/day</p>
                 </div>
             </div>
 
