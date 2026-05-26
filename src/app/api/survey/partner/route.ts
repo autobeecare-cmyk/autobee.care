@@ -21,8 +21,6 @@ export async function POST(req: Request) {
       .from("partner_onboarding_responses")
       .insert([{
         ...sanitizedData,
-        trial_commitment: true, // Mocked to prevent NOT NULL constraint errors if column still exists
-        surveyed_by: "self",
       }]);
 
     if (error) {

@@ -128,12 +128,17 @@ export default function PartnerSurveyPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("Failed");
+      const responseData = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        console.error("API Error Response:", responseData);
+        throw new Error(JSON.stringify(responseData));
+      }
       localStorage.removeItem("autobee_partner_draft");
       router.push("/survey/partner/thank-you");
-    } catch {
+    } catch (err: any) {
+      console.error("Submit error:", err);
       toast.error("Failed to submit", {
-        description: "Please check your connection and try again.",
+        description: err.message || "Please check your connection and try again.",
       });
     } finally {
       setIsSubmitting(false);
